@@ -1,0 +1,31 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fully_integrated/core/constants/api_url.dart';
+import 'package:fully_integrated/core/helpers/http_helper.dart';
+import 'package:fully_integrated/core/models/product.dart';
+
+class ProductsVm extends ChangeNotifier {
+  HttpHelper hh = HttpHelper.instance;
+  int totalProduct = 0;
+  
+
+  List<Product> allProducts = [];
+
+  addOne() {
+    totalProduct++;
+    notifyListeners();
+  }
+
+  void getProductsFromServer() async {
+    Response res = await hh.get(ApiUrl.PRODUCTROUTE);
+    List<dynamic> allProducts = res.data["products"];
+    this.allProducts = allProducts.map((i) => Product.fromAPI(i)).toList();
+
+    notifyListeners();
+  }
+
+  getSingleProductDetails(int id) {
+    HttpHelper hh = HttpHelper.instance;
+    hh.get("https://dummyjson.com/products/$id");
+  }
+}
