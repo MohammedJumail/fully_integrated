@@ -11,7 +11,7 @@ class HttpHelper<T> {
 
   Dio _d = Dio();
 
-  Future<Response> get(String url) async {
+  Future<Response> get({required String url, headers}) async {
     return await _d.get(url);
   }
 

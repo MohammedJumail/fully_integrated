@@ -7,7 +7,6 @@ import 'package:fully_integrated/core/models/product.dart';
 class ProductsVm extends ChangeNotifier {
   HttpHelper hh = HttpHelper.instance;
   int totalProduct = 0;
-  
 
   List<Product> allProducts = [];
 
@@ -17,7 +16,7 @@ class ProductsVm extends ChangeNotifier {
   }
 
   void getProductsFromServer() async {
-    Response res = await hh.get(ApiUrl.PRODUCTROUTE);
+    Response res = await hh.get(url: ApiUrl.PRODUCTROUTE);
     List<dynamic> allProducts = res.data["products"];
     this.allProducts = allProducts.map((i) => Product.fromAPI(i)).toList();
 
@@ -26,6 +25,6 @@ class ProductsVm extends ChangeNotifier {
 
   getSingleProductDetails(int id) {
     HttpHelper hh = HttpHelper.instance;
-    hh.get("https://dummyjson.com/products/$id");
+    hh.get(url: "${ApiUrl.PRODUCTROUTE}/$id");
   }
 }

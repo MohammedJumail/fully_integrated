@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fully_integrated/core/view_models/products_vm.dart';
 import 'package:fully_integrated/core/views/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,15 +10,19 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: false,
+    return MultiProvider(
+      providers: [ChangeNotifierProvider<ProductsVm>(
+      create: (ctx) => ProductsVm()..getProductsFromServer())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: false,
+        ),
+        home: HomeScreen(),
       ),
-      home: HomeScreen(),
     );
   }
 }
